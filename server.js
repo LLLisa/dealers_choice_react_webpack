@@ -47,13 +47,15 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
+app.use('/dist', express.static(path.join(__dirname, 'dist'))); //smh
+
 const init = async () => {
   try {
     await seedDb();
     console.log('-----synced-----');
     const port = 9001;
     app.listen(port, () => {
-      console.log(`glistening on port ${port}`);
+      console.log(`listening on port ${port}`);
     });
   } catch (error) {
     console.log(error);
@@ -63,6 +65,10 @@ const init = async () => {
 init();
 
 //routes
+app.get('/', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '/index.html'));
+});
+
 app.get('/babe', (req, res) => {
   res.send('hello babe');
 });
