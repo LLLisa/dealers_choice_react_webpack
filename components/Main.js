@@ -1,7 +1,7 @@
 import React from 'react';
-import { ReactDOM } from 'react';
 import axios from 'axios';
 import Name from './Name';
+import AddButton from './AddButton';
 
 export default class Main extends React.Component {
   constructor() {
@@ -12,11 +12,19 @@ export default class Main extends React.Component {
       selectedHuman: {},
     };
     this.showInfo = this.showInfo.bind(this);
+    this.addHuman = this.addHuman.bind(this);
   }
 
   async componentDidMount() {
     const humanList = await axios.get('/api/humans');
     this.setState({ humanList: humanList.data });
+  }
+
+  async addHuman() {
+    const newHuman = await axios.post('/api/humans');
+    this.setState({
+      humanList: this.state.humanList.concat([newHuman.data]),
+    });
   }
 
   showInfo(human) {
@@ -26,11 +34,19 @@ export default class Main extends React.Component {
   }
 
   render() {
-    // console.log(this.state.humanList);
-
     return (
       <>
-        <h1>List of Random Humans</h1>
+        <h1 style={{ marginBottom: '0' }}>List of Random Humans</h1>
+        <p
+          style={{
+            fontStyle: 'italic',
+            fontSize: '0.75rem',
+            marginBottom: '1.25rem',
+          }}
+        >
+          click random human for their fake contact info
+        </p>
+        <AddButton addHuman={this.addHuman} />
         <ul>
           {this.state.humanList.map((human) => {
             return (

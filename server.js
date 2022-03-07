@@ -84,8 +84,13 @@ app.get('/api/humans', async (req, res, next) => {
 
 app.post('/api/humans', async (req, res, next) => {
   try {
-    const newHuman = await createHuman(1);
-    res.status(418).send(newHuman);
+    const newHuman = await Human.create({
+      name: faker.name.findName(),
+      phone: faker.phone.phoneNumber(),
+      email: faker.internet.email(),
+    });
+    // console.log(newHuman);
+    res.send(newHuman);
   } catch (error) {
     next(error);
   }
