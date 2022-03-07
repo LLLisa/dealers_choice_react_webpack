@@ -3,8 +3,8 @@ const faker = require('faker');
 const Sequelize = require('sequelize');
 const db = new Sequelize(
   process.env.DATABASE_URL ||
-    'postgres://localhost/dealers_choice_react_webpack'
-  // { logging: false } //love this
+    'postgres://localhost/dealers_choice_react_webpack',
+  { logging: false } //love this
 );
 
 const Human = db.define('human', {
@@ -36,12 +36,12 @@ const createHuman = async (num) => {
 const seedDb = async () => {
   try {
     await db.sync({ force: true });
-    // await createHuman(10);
-    await Human.create({
-      name: 'Chelsea Aufderhar',
-      phone: '331.685.0966 x6123',
-      email: 'Gideon_Nader79@hotmail.com',
-    });
+    await createHuman(10);
+    // await Human.create({
+    //   name: 'Chelsea Aufderhar',
+    //   phone: '331.685.0966 x6123',
+    //   email: 'Gideon_Nader79@hotmail.com',
+    // });
   } catch (error) {
     console.log(error);
   }
