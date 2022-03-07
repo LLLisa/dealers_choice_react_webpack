@@ -36,7 +36,12 @@ const createHuman = async (num) => {
 const seedDb = async () => {
   try {
     await db.sync({ force: true });
-    await createHuman(10);
+    // await createHuman(10);
+    await Human.create({
+      name: 'Chelsea Aufderhar',
+      phone: '331.685.0966 x6123',
+      email: 'Gideon_Nader79@hotmail.com',
+    });
   } catch (error) {
     console.log(error);
   }
