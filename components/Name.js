@@ -1,19 +1,17 @@
 import React from 'react';
-import { ReactDOM } from 'react';
-import PersonalInfo from './PersonalInfo';
 
 export default class Name extends React.Component {
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const human = this.props.human;
-    const persInfo = this.props.persInfo;
+    const selectedHuman = this.props.selectedHuman;
     return (
       <>
         <span onClick={() => this.props.showInfo(human)}>{human.name}</span>
-        {persInfo.length ? (
+        {selectedHuman.id && selectedHuman.id === human.id ? (
           <ul>
-            <li>phone: {persInfo[0]}</li>
-            <li>email: {persInfo[1]}</li>
+            <li>phone: {human.phone}</li>
+            <li>email: {human.email}</li>
           </ul>
         ) : (
           <></>

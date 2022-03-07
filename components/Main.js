@@ -9,6 +9,7 @@ export default class Main extends React.Component {
     this.state = {
       humanList: [],
       persInfo: [],
+      selectedHuman: {},
     };
     this.showInfo = this.showInfo.bind(this);
   }
@@ -20,7 +21,7 @@ export default class Main extends React.Component {
 
   showInfo(human) {
     this.setState({
-      persInfo: [human.phone, human.email],
+      selectedHuman: human,
     });
   }
 
@@ -37,7 +38,7 @@ export default class Main extends React.Component {
                 <Name
                   human={human}
                   showInfo={this.showInfo}
-                  persInfo={this.state.persInfo}
+                  selectedHuman={this.state.selectedHuman}
                 />
               </li>
             );
