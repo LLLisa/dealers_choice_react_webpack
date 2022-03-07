@@ -3,7 +3,13 @@ const faker = require('faker');
 const Sequelize = require('sequelize');
 const db = new Sequelize(
   process.env.DATABASE_URL ||
-    'postgres://localhost/dealers_choice_react_webpack'
+    'postgres://localhost/dealers_choice_react_webpack',
+  {
+    ssl: true,
+    dialectOptions: {
+      ssl: true,
+    },
+  }
   // { logging: false } //love this
 );
 
