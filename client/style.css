@@ -1,0 +1,23 @@
+/* buttons */
+li > button {
+  background-color: red;
+  margin-left: 1rem;
+}
+
+#adder {
+  background-color: green;
+}
+
+/* lists */
+li > ul {
+  list-style-type: none;
+}
+
+.name-list {
+  margin-bottom: 2rem;
+  margin-top: 0;
+}
+
+.email {
+  margin-bottom: 0;
+}

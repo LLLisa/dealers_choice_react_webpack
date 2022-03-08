@@ -37,22 +37,19 @@ const seedDb = async () => {
   try {
     await db.sync({ force: true });
     await createHuman(10);
-    // await Human.create({
-    //   name: 'Chelsea Aufderhar',
-    //   phone: '331.685.0966 x6123',
-    //   email: 'Gideon_Nader79@hotmail.com',
-    // });
   } catch (error) {
     console.log(error);
   }
 };
 
-//express--------------------
+//server------------------------------------
 const express = require('express');
 const app = express();
 const path = require('path');
+const { sendStatus } = require('express/lib/response');
 
 app.use('/dist', express.static(path.join(__dirname, 'dist'))); //smh
+app.use('/client', express.static(path.join(__dirname, 'client')));
 
 const init = async () => {
   try {
@@ -69,7 +66,7 @@ const init = async () => {
 
 init();
 
-//routes
+//routes-------------------------------------------
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
@@ -94,8 +91,17 @@ app.post('/api/humans', async (req, res, next) => {
       phone: faker.phone.phoneNumber(),
       email: faker.internet.email(),
     });
-    // console.log(newHuman);
     res.send(newHuman);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete('/api/humans/:doomed', async (req, res, next) => {
+  try {
+    const doomedHuman = await Human.findByPk(req.params.doomed);
+    await doomedHuman.destroy();
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }

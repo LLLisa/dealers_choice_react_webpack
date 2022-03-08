@@ -8,11 +8,11 @@ export default class Main extends React.Component {
     super();
     this.state = {
       humanList: [],
-      persInfo: [],
       selectedHuman: {},
     };
     this.showInfo = this.showInfo.bind(this);
     this.addHuman = this.addHuman.bind(this);
+    this.destroyHuman = this.destroyHuman.bind(this);
   }
 
   async componentDidMount() {
@@ -25,6 +25,14 @@ export default class Main extends React.Component {
     this.setState({
       humanList: this.state.humanList.concat([newHuman.data]),
     });
+  }
+
+  async destroyHuman(doomedHuman) {
+    await axios.delete(`/api/humans/${doomedHuman.id}`);
+    const revisedList = this.state.humanList.filter((x) => {
+      return x.id !== doomedHuman.id;
+    });
+    this.setState({ humanList: revisedList });
   }
 
   showInfo(human) {
@@ -50,10 +58,11 @@ export default class Main extends React.Component {
         <ul>
           {this.state.humanList.map((human) => {
             return (
-              <li key={human.id}>
+              <li key={human.id} className="name-list">
                 <Name
                   human={human}
                   showInfo={this.showInfo}
+                  destroyHuman={this.destroyHuman}
                   selectedHuman={this.state.selectedHuman}
                 />
               </li>
